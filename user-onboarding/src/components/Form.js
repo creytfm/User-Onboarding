@@ -8,6 +8,10 @@ function LoginForm({ values, errors, touched, isSubmitting }) {
   return (
     <Form>
       <div>
+        {touched.name && errors.name && <p>{errors.name}</p>}
+        <Field type="name" name="name" placeholder="Name" />
+      </div>
+      <div>
         {touched.email && errors.email && <p>{errors.email}</p>}
         <Field type="email" name="email" placeholder="Email" />
       </div>
@@ -25,15 +29,17 @@ function LoginForm({ values, errors, touched, isSubmitting }) {
 }
 
 const FormikLoginForm = withFormik({
-  mapPropsToValues({ email, password, tos, meal }) {
+  mapPropsToValues({ name, email, password, tos}) {
     return {
+      name: name || "", 
       email: email || "",
       password: password || "",
       tos: tos || false,
-      meal: meal || "silver"
     };
   },
   validationSchema: Yup.object().shape({
+    name: Yup.string()
+      .required("Name is required"),
     email: Yup.string()
       .email("Email not valid")
       .required("Email is required"),
