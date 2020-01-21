@@ -4,7 +4,8 @@ import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 
-function LoginForm({ values, errors, touched, isSubmitting }) {
+const LoginForm = ({ values, errors, touched, isSubmitting })  => {
+  
   return (
     <Form>
       <div>
@@ -21,7 +22,7 @@ function LoginForm({ values, errors, touched, isSubmitting }) {
       </div>
       <label>
         <Field type="checkbox" name="tos" checked={values.tos} />
-        Accept TOS
+        Accept Terms Of Service
       </label>
       <button type="submit">Submit</button>
     </Form>
@@ -29,17 +30,16 @@ function LoginForm({ values, errors, touched, isSubmitting }) {
 }
 
 const FormikLoginForm = withFormik({
-  mapPropsToValues({ name, email, password, tos}) {
+  mapPropsToValues({ name, email, password, tos }) {
     return {
-      name: name || "", 
+      name: name || "",
       email: email || "",
       password: password || "",
-      tos: tos || false,
+      tos: tos || false
     };
   },
   validationSchema: Yup.object().shape({
-    name: Yup.string()
-      .required("Name is required"),
+    name: Yup.string().required("Name is required"),
     email: Yup.string()
       .email("Email not valid")
       .required("Email is required"),
@@ -54,8 +54,9 @@ const FormikLoginForm = withFormik({
       axios
         .post("https://reqres.in/api/users", values)
         .then(res => {
-          console.log(res); // Data was created successfully and logs to console
+          console.log(res.data); // Data was created successfully and logs to console
           resetForm();
+          
           setSubmitting(false);
         })
         .catch(err => {
