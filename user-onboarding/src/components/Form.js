@@ -23,7 +23,7 @@ function LoginForm({ values, errors, touched, isSubmitting }) {
         <Field type="checkbox" name="tos" checked={values.tos} />
         Accept TOS
       </label>
-      <button disabled={isSubmitting}>Submit</button>
+      <button type="submit">Submit</button>
     </Form>
   );
 }
@@ -52,7 +52,7 @@ const FormikLoginForm = withFormik({
       setErrors({ email: "That email is already taken" });
     } else {
       axios
-        .post("https://yourdatabaseurlgoeshere.com", values)
+        .post("https://reqres.in/api/users", values)
         .then(res => {
           console.log(res); // Data was created successfully and logs to console
           resetForm();
